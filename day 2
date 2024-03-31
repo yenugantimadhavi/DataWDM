@@ -1,0 +1,179 @@
+Covariance and correlation 
+Children of three ages are asked to indicate their preference for three photographs of adults. Do the data suggest that there is a significant relationship between age and photograph preference? What is wrong with this study?
+
+                                                                        Photograph:
+                         Age of child               A                      B                      C
+         				   5-6 years:      18                     22                     20
+
+                                    7-8 years:         2                    28                     40
+
+                                    9-10 years:     20                     10                     40
+
+1.	Use cov() to calculate the sample covariance between B  and  C.
+2.	Use another call to cov() to calculate the sample covariance matrix for the preferences.
+3.	Use cor() to calculate the sample correlation between B and C.
+4.	Use another call to cor() to calculate the sample correlation matrix for the preferences.
+# Create a matrix for the data
+data <- matrix(c(18, 2, 20, 22, 28, 10, 20, 40, 40), nrow = 3, byrow = TRUE)
+rownames(data) <- c("5-6 years", "7-8 years", "9-10 years")
+colnames(data) <- c("A", "B", "C")
+# Calculate covariance between B and C
+cov_bc <- cov(data[, "B"], data[, "C"])
+print(paste("Covariance between B and C:", cov_bc))
+# Calculate sample covariance matrix for the preferences
+cov_matrix <- cov(data)
+print("Sample Covariance Matrix:")
+print(cov_matrix)
+# Calculate correlation between B and C
+cor_bc <- cor(data[, "B"], data[, "C"])
+print(paste("Correlation between B and C:", cor_bc))
+# Calculate sample correlation matrix for the preferences
+cor_matrix <- cor(data)
+print("Sample Correlation Matrix:")
+print(cor_matrix)
+
+2.Two Maths teachers are comparing how their Year 9 classes performed in the end of year exams. Their results are as follows:
+Class A: 76, 35, 47, 64, 95, 66, 89, 36, 8476,35,47,64,95,66,89,36,84 
+Class B: 51, 56, 84, 60, 59, 70, 63, 66, 5051,56,84,60,59,70,63,66,50 
+(i) Find which class had scored higher mean, median and range.
+(ii) Plot above in boxplot and give the inferences 
+# Data for Class A and Class B
+class_a <- c(76, 35, 47, 64, 95, 66, 89, 36, 84)
+class_b <- c(51, 56, 84, 60, 59, 70, 63, 66, 50)
+# Calculate mean, median, and range for each class
+mean_a <- mean(class_a)
+mean_b <- mean(class_b)
+median_a <- median(class_a)
+median_b <- median(class_b)
+range_a <- max(class_a) - min(class_a)
+range_b <- max(class_b) - min(class_b)
+# Determine which class scored higher mean, median, and range
+mean_comparison <- ifelse(mean_a > mean_b, "Class A", "Class B")
+median_comparison <- ifelse(median_a > median_b, "Class A", "Class B")
+range_comparison <- ifelse(range_a > range_b, "Class A", "Class B")
+# Print the results
+cat("Mean:", mean_comparison, "had a higher mean.\n")
+cat("Median:", median_comparison, "had a higher median.\n")
+cat("Range:", range_comparison, "had a higher range.\n")
+# Plot boxplot
+boxplot(class_a, class_b, names = c("Class A", "Class B"), col = c("skyblue", 
+                                                                   "lightgreen"),
+        main = "Comparison of Exam Scores for Class A and Class B",
+        ylab = "Scores", xlab = "Class")
+
+
+3.Let us consider one example to make the calculation method clear. Assume that the minimum and maximum values for the feature F are $50,000 and $100,000 correspondingly. It needs to range F from 0 to 1. In accordance with min-max normalization, v = $80,
+b) Use the two methods below to normalize the following group of data: 200, 300, 400, 600, 1000
+ (a) min-max normalization by setting min = 0 and max = 1
+ (b) z-score normalization
+
+# Define the given data
+data <- c(200, 300, 400, 600, 1000)
+# Min-max normalization by setting min = 0 and max = 1
+min_max_normalized <- (data - min(data)) / (max(data) - min(data))
+# Z-score normalization
+z_score_normalized <- (data - mean(data)) / sd(data)
+# Print the normalized values
+cat("Min-max normalized data:", min_max_normalized, "\n")
+cat("Z-score normalized data:", z_score_normalized, "\n")
+
+
+4.Make a histogram for the “AirPassengers “dataset, start at 100 on the x-axis, and from values 200 to 700, make the bins 150 wide
+
+# Load the AirPassengers dataset
+data("AirPassengers")
+# Create a histogram with specified bins
+hist(AirPassengers, breaks = seq(100, 700, by = 150), xlim = c(100, 700),
+     main = "Histogram of AirPassengers dataset",
+     xlab = "Passenger Count", ylab = "Frequency")
+
+5.Obtain Multiple Lines in Line Chart using a single Plot Function in R.Use attributes“mpg”and“qsec”of   the dataset “mtcars”
+# Load the mtcars dataset
+data(mtcars)
+# Plot the first line
+plot(mtcars$mpg, type = "l", col = "blue", xlab = "Index", ylab = "mpg and qsec")
+# Add the second line to the plot
+lines(mtcars$qsec, type = "l", col = "red")
+# Add a legend
+legend("topright", legend = c("mpg", "qsec"), col = c("blue", "red"), lty = 1)
+
+
+6.Download the Dataset "water" From R dataset Link.Find out whether there is a linear relation between attributes"mortality" and"hardness" by plot function.Fit the Data into the Linear Regression model.Predict the mortality for the hardness=88.
+# Read the CSV file
+data <- read.csv("C:\\Users/MANJULA/Downloads/water_potability.csv")
+# Check the data types of columns
+str(data)
+# Convert Potability column to factor
+data$Potability <- as.factor(data$Potability)
+# Convert Potability factor levels to numeric
+data$Potability <- as.numeric(data$Potability)
+# Remove rows with missing or infinite values in Hardness
+data <- data[is.finite(data$Hardness), ]
+# Replace NA values with mean of Hardness
+data$Hardness[is.na(data$Hardness)] <- mean(data$Hardness, na.rm = TRUE)
+# Replace NA values with mean of Potability
+data$Potability[is.na(data$Potability)] <- mean(data$Potability, na.rm = TRUE)
+# Plotting Potability vs. Hardness
+plot(data$Hardness, data$Potability, xlab = "Hardness", ylab = "Potability", main 
+     = "Scatter plot of Potability vs. Hardness")
+# Fit linear regression model
+model <- lm(Potability ~ Hardness, data = data)
+# Add the regression line to the plot
+abline(model, col = "red")
+# Predict Potability for Hardness=88
+predict_value <- predict(model, newdata = data.frame(Hardness = 88))
+cat("Predicted Potability for Hardness=88:", predict_value, "\n")
+# Summary of the linear regression model
+summary(model)
+
+
+7.Create a Boxplot graph for the relation between "mpg"(miles per galloon) and "cyl"(number of Cylinders) for the dataset "mtcars" available in R Environment.
+# Load the mtcars dataset
+data("mtcars")
+# Create a boxplot for mpg vs. cyl
+boxplot(mpg ~ cyl, data = mtcars,
+        xlab = "Number of Cylinders",
+        ylab = "Miles per Gallon",
+        main = "Boxplot of Miles per Gallon vs. Number of Cylinders")
+
+
+8.Assume the Tennis coach wants to determine if any of his team players are scoring   
+      outliers. To visualize the distribution of points scored by his players, then how can he    
+      decide to develop the box plot? Give suitable example using Boxplot visualization   
+      technique.
+# Sample data
+set.seed(42)
+points <- c(50, 60, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 
+            140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200, 205, 210, 215, 
+            220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 
+            300, 350, 400)
+# Add a few outliers
+outliers <- c(20, 25, 30, 35, 400, 450, 500)
+points <- c(points, outliers)
+# Create a boxplot
+boxplot(points, 
+        main = "Boxplot of Points Scored by Tennis Team Players",
+        ylab = "Points",
+        ylim = c(0, 500),
+        notch = TRUE, # Add a notch to the box
+        outline = TRUE, # Show outliers as individual points
+        col = "lightblue" # Box color
+)
+9. diabetes
+db=data.frame(
+  bms=c(78,79,80),
+  gl=c(98,99,99),
+  age=c(60,65,25),
+  outcome=c(1,1,0)
+)
+print(db)
+library(ggplot2)
+ggplot(db,aes(x=outcome,y=age))
+db=cbind(db,name=c("nithish","rahul","mithun"))
+ggplot(db,aes(x=name,y=bms))+geom_bar(stat="identity",fill="red")
+
+dataset<-read.csv("C:\\Users/MANJULA/Downloads/diabetes_dataset.csv")
+head(dataset)
+library(ggplot2)
+ggplot(dataset,aes(x=Outcome,y=Glucose))+geom_bar(stat="identity",fill="pink")
+
